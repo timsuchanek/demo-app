@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "graphql-import": "^0.6.0",
+    "graphql-yoga": "^1.16.1",
+    "prisma-lib": "^0.0.16"
+  },
+  "devDependencies": {
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.1"
+  }
+}

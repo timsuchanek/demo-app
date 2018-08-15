@@ -1,0 +1,6 @@
+endpoint: https://bucky-27701.herokuapp.com/sorenapp/dev
+datamodel: datamodel.graphql
+
+generate:
+  - generator: typescript
+    output: ../src/generated/prisma.ts
