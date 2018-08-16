@@ -3,8 +3,8 @@ import { IResolvers } from 'graphql-tools/dist/Interfaces'
 import { makePrismaBindingClass, BasePrismaOptions, Options } from 'prisma-lib'
 
 export interface Query {
-    masters: (args?: { where?: MasterWhereInput, orderBy?: MasterOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }) => Promise<Array<Master>> ,
-    cats: (args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }) => Promise<Array<Cat>> ,
+    masters: (args?: { where?: MasterWhereInput, orderBy?: MasterOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }) => Promise<Array<MasterNode>> ,
+    cats: (args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }) => Promise<Array<CatNode>> ,
     master: (args: { where: MasterWhereUniqueInput }) => Master ,
     cat: (args: { where: CatWhereUniqueInput }) => Cat ,
     mastersConnection: (args?: { where?: MasterWhereInput, orderBy?: MasterOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }) => MasterConnection ,
@@ -28,8 +28,8 @@ export interface Mutation {
   }
 
 export interface Subscription {
-    master: <T = Promise<Partial<MasterSubscriptionPayload | null>>>(args?: { where?: MasterSubscriptionWhereInput , info?: GraphQLResolveInfo, options?: Options}) => Promise<AsyncIterator<T>> ,
-    cat: <T = Promise<Partial<CatSubscriptionPayload | null>>>(args?: { where?: CatSubscriptionWhereInput , info?: GraphQLResolveInfo, options?: Options}) => Promise<AsyncIterator<T>> 
+    master: <T = Promise<Partial<MasterSubscriptionPayloadNode | null>>>(args?: { where?: MasterSubscriptionWhereInput , info?: GraphQLResolveInfo, options?: Options}) => Promise<AsyncIterator<T>> ,
+    cat: <T = Promise<Partial<CatSubscriptionPayloadNode | null>>>(args?: { where?: CatSubscriptionWhereInput , info?: GraphQLResolveInfo, options?: Options}) => Promise<AsyncIterator<T>> 
   }
 
 export interface Exists {
@@ -68,28 +68,28 @@ export interface Delegate {
 }
 
 export interface DelegateQuery {
-    masters: <T = Promise<Array<MasterNode>>>(args?: { where?: MasterWhereInput, orderBy?: MasterOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    cats: <T = Promise<Array<CatNode>>>(args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    master: <T = Promise<Partial<Master | null>>>(args: { where: MasterWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    cat: <T = Promise<Partial<Cat | null>>>(args: { where: CatWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    mastersConnection: <T = Promise<Partial<MasterConnection>>>(args?: { where?: MasterWhereInput, orderBy?: MasterOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    catsConnection: <T = Promise<Partial<CatConnection>>>(args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    node: <T = Promise<Partial<Node | null>>>(args: { id: ID_Output , info?: GraphQLResolveInfo, options?: Options}) => T 
+    masters: <T = Promise<Array<MasterNodeNode>>>(args?: { where?: MasterWhereInput, orderBy?: MasterOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    cats: <T = Promise<Array<CatNodeNode>>>(args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    master: <T = Promise<Partial<MasterNode | null>>>(args: { where: MasterWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    cat: <T = Promise<Partial<CatNode | null>>>(args: { where: CatWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    mastersConnection: <T = Promise<Partial<MasterConnectionNode>>>(args?: { where?: MasterWhereInput, orderBy?: MasterOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    catsConnection: <T = Promise<Partial<CatConnectionNode>>>(args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    node: <T = Promise<Partial<NodeNode | null>>>(args: { id: ID_Output , info?: GraphQLResolveInfo, options?: Options}) => T 
   }
 
 export interface DelegateMutation {
-    createMaster: <T = Promise<Partial<Master>>>(args: { data: MasterCreateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    createCat: <T = Promise<Partial<Cat>>>(args: { data: CatCreateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    updateMaster: <T = Promise<Partial<Master | null>>>(args: { data: MasterUpdateInput, where: MasterWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    updateCat: <T = Promise<Partial<Cat | null>>>(args: { data: CatUpdateInput, where: CatWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    deleteMaster: <T = Promise<Partial<Master | null>>>(args: { where: MasterWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    deleteCat: <T = Promise<Partial<Cat | null>>>(args: { where: CatWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    upsertMaster: <T = Promise<Partial<Master>>>(args: { where: MasterWhereUniqueInput, create: MasterCreateInput, update: MasterUpdateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    upsertCat: <T = Promise<Partial<Cat>>>(args: { where: CatWhereUniqueInput, create: CatCreateInput, update: CatUpdateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    updateManyMasters: <T = Promise<Partial<BatchPayload>>>(args: { data: MasterUpdateInput, where?: MasterWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    updateManyCats: <T = Promise<Partial<BatchPayload>>>(args: { data: CatUpdateInput, where?: CatWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    deleteManyMasters: <T = Promise<Partial<BatchPayload>>>(args?: { where?: MasterWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    deleteManyCats: <T = Promise<Partial<BatchPayload>>>(args?: { where?: CatWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T 
+    createMaster: <T = Promise<Partial<MasterNode>>>(args: { data: MasterCreateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    createCat: <T = Promise<Partial<CatNode>>>(args: { data: CatCreateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    updateMaster: <T = Promise<Partial<MasterNode | null>>>(args: { data: MasterUpdateInput, where: MasterWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    updateCat: <T = Promise<Partial<CatNode | null>>>(args: { data: CatUpdateInput, where: CatWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    deleteMaster: <T = Promise<Partial<MasterNode | null>>>(args: { where: MasterWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    deleteCat: <T = Promise<Partial<CatNode | null>>>(args: { where: CatWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    upsertMaster: <T = Promise<Partial<MasterNode>>>(args: { where: MasterWhereUniqueInput, create: MasterCreateInput, update: MasterUpdateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    upsertCat: <T = Promise<Partial<CatNode>>>(args: { where: CatWhereUniqueInput, create: CatCreateInput, update: CatUpdateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    updateManyMasters: <T = Promise<Partial<BatchPayloadNode>>>(args: { data: MasterUpdateInput, where?: MasterWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    updateManyCats: <T = Promise<Partial<BatchPayloadNode>>>(args: { data: CatUpdateInput, where?: CatWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    deleteManyMasters: <T = Promise<Partial<BatchPayloadNode>>>(args?: { where?: MasterWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    deleteManyCats: <T = Promise<Partial<BatchPayloadNode>>>(args?: { where?: CatWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T 
   }
 
 export interface BindingConstructor<T> {
@@ -852,7 +852,7 @@ export interface MasterNode extends Node {
 
 export interface Master extends Promise<MasterNode>, Node {
   id: ID_Output
-  catz: (args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }) => Promise<Array<Cat>>
+  catz: (args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }) => Promise<Array<CatNode>>
 }
 
 /*
@@ -924,7 +924,7 @@ export interface MasterConnectionNode {
  */
 export interface MasterConnection extends Promise<MasterConnectionNode> {
   pageInfo: () => PageInfo
-  edges: () => Promise<Array<MasterEdge>>
+  edges: () => Promise<Array<MasterEdgeNode>>
   aggregate: () => AggregateMaster
 }
 
@@ -967,7 +967,7 @@ export interface CatConnectionNode {
  */
 export interface CatConnection extends Promise<CatConnectionNode> {
   pageInfo: () => PageInfo
-  edges: () => Promise<Array<CatEdge>>
+  edges: () => Promise<Array<CatEdgeNode>>
   aggregate: () => AggregateCat
 }
 

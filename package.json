@@ -5,7 +5,7 @@
     "prisma-lib": "^0.1.2"
   },
   "devDependencies": {
-    "prisma": "1.15.0-alpha.18",
+    "prisma": "1.15.0-alpha.19",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.1"
   },
