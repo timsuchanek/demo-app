@@ -3,8 +3,8 @@ import { IResolvers } from 'graphql-tools/dist/Interfaces'
 import { makePrismaBindingClass, BasePrismaOptions, Options } from 'prisma-lib'
 
 export interface Query {
-    masters: (args?: { where?: MasterWhereInput, orderBy?: MasterOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }) => Promise<Array<MasterNode>> ,
-    cats: (args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }) => Promise<Array<CatNode>> ,
+    masters: (args?: { where?: MasterWhereInput, orderBy?: MasterOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }) => Promise<Array<Master>> ,
+    cats: (args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }) => Promise<Array<Cat>> ,
     master: (args: { where: MasterWhereUniqueInput }) => Master ,
     cat: (args: { where: CatWhereUniqueInput }) => Cat ,
     mastersConnection: (args?: { where?: MasterWhereInput, orderBy?: MasterOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }) => MasterConnection ,
@@ -28,8 +28,8 @@ export interface Mutation {
   }
 
 export interface Subscription {
-    master: (args?: { where?: MasterSubscriptionWhereInput }) => Promise<AsyncIterator<T>> ,
-    cat: (args?: { where?: CatSubscriptionWhereInput }) => Promise<AsyncIterator<T>> 
+    master: <T = Promise<Partial<MasterSubscriptionPayload | null>>>(args?: { where?: MasterSubscriptionWhereInput , info?: GraphQLResolveInfo, options?: Options}) => Promise<AsyncIterator<T>> ,
+    cat: <T = Promise<Partial<CatSubscriptionPayload | null>>>(args?: { where?: CatSubscriptionWhereInput , info?: GraphQLResolveInfo, options?: Options}) => Promise<AsyncIterator<T>> 
   }
 
 export interface Exists {
@@ -70,26 +70,26 @@ export interface Delegate {
 export interface DelegateQuery {
     masters: <T = Promise<Array<MasterNode>>>(args?: { where?: MasterWhereInput, orderBy?: MasterOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
     cats: <T = Promise<Array<CatNode>>>(args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    master: <T = Promise<MasterNode | null>>(args: { where: MasterWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    cat: <T = Promise<CatNode | null>>(args: { where: CatWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    mastersConnection: <T = Promise<MasterConnectionNode>>(args?: { where?: MasterWhereInput, orderBy?: MasterOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    catsConnection: <T = Promise<CatConnectionNode>>(args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    node: <T = Promise<NodeNode | null>>(args: { id: ID_Output , info?: GraphQLResolveInfo, options?: Options}) => T 
+    master: <T = Promise<Partial<Master | null>>>(args: { where: MasterWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    cat: <T = Promise<Partial<Cat | null>>>(args: { where: CatWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    mastersConnection: <T = Promise<Partial<MasterConnection>>>(args?: { where?: MasterWhereInput, orderBy?: MasterOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    catsConnection: <T = Promise<Partial<CatConnection>>>(args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    node: <T = Promise<Partial<Node | null>>>(args: { id: ID_Output , info?: GraphQLResolveInfo, options?: Options}) => T 
   }
 
 export interface DelegateMutation {
-    createMaster: <T = Promise<MasterNode>>(args: { data: MasterCreateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    createCat: <T = Promise<CatNode>>(args: { data: CatCreateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    updateMaster: <T = Promise<MasterNode | null>>(args: { data: MasterUpdateInput, where: MasterWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    updateCat: <T = Promise<CatNode | null>>(args: { data: CatUpdateInput, where: CatWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    deleteMaster: <T = Promise<MasterNode | null>>(args: { where: MasterWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    deleteCat: <T = Promise<CatNode | null>>(args: { where: CatWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    upsertMaster: <T = Promise<MasterNode>>(args: { where: MasterWhereUniqueInput, create: MasterCreateInput, update: MasterUpdateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    upsertCat: <T = Promise<CatNode>>(args: { where: CatWhereUniqueInput, create: CatCreateInput, update: CatUpdateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    updateManyMasters: <T = Promise<BatchPayloadNode>>(args: { data: MasterUpdateInput, where?: MasterWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    updateManyCats: <T = Promise<BatchPayloadNode>>(args: { data: CatUpdateInput, where?: CatWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    deleteManyMasters: <T = Promise<BatchPayloadNode>>(args?: { where?: MasterWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
-    deleteManyCats: <T = Promise<BatchPayloadNode>>(args?: { where?: CatWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T 
+    createMaster: <T = Promise<Partial<Master>>>(args: { data: MasterCreateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    createCat: <T = Promise<Partial<Cat>>>(args: { data: CatCreateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    updateMaster: <T = Promise<Partial<Master | null>>>(args: { data: MasterUpdateInput, where: MasterWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    updateCat: <T = Promise<Partial<Cat | null>>>(args: { data: CatUpdateInput, where: CatWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    deleteMaster: <T = Promise<Partial<Master | null>>>(args: { where: MasterWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    deleteCat: <T = Promise<Partial<Cat | null>>>(args: { where: CatWhereUniqueInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    upsertMaster: <T = Promise<Partial<Master>>>(args: { where: MasterWhereUniqueInput, create: MasterCreateInput, update: MasterUpdateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    upsertCat: <T = Promise<Partial<Cat>>>(args: { where: CatWhereUniqueInput, create: CatCreateInput, update: CatUpdateInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    updateManyMasters: <T = Promise<Partial<BatchPayload>>>(args: { data: MasterUpdateInput, where?: MasterWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    updateManyCats: <T = Promise<Partial<BatchPayload>>>(args: { data: CatUpdateInput, where?: CatWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    deleteManyMasters: <T = Promise<Partial<BatchPayload>>>(args?: { where?: MasterWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T ,
+    deleteManyCats: <T = Promise<Partial<BatchPayload>>>(args?: { where?: CatWhereInput , info?: GraphQLResolveInfo, options?: Options}) => T 
   }
 
 export interface BindingConstructor<T> {
@@ -823,13 +823,13 @@ export interface CatWhereInput {
 
  */
 export interface NodeNode {
-  id: Promise<ID_Output>
+  id: ID_Output
 }
 
 export interface CatPreviousValuesNode {
-  id: Promise<ID_Output>
-  name: Promise<String>
-  color: Promise<String>
+  id: ID_Output
+  name: String
+  color: String
 }
 
 export interface CatPreviousValues extends Promise<CatPreviousValuesNode> {
@@ -839,7 +839,7 @@ export interface CatPreviousValues extends Promise<CatPreviousValuesNode> {
 }
 
 export interface BatchPayloadNode {
-  count: Promise<Long>
+  count: Long
 }
 
 export interface BatchPayload extends Promise<BatchPayloadNode> {
@@ -847,12 +847,12 @@ export interface BatchPayload extends Promise<BatchPayloadNode> {
 }
 
 export interface MasterNode extends Node {
-  id: Promise<ID_Output>
+  id: ID_Output
 }
 
 export interface Master extends Promise<MasterNode>, Node {
   id: ID_Output
-  catz: Promise<Array<CatNode>>
+  catz: (args?: { where?: CatWhereInput, orderBy?: CatOrderByInput, skip?: Int, after?: String, before?: String, first?: Int, last?: Int }) => Promise<Array<Cat>>
 }
 
 /*
@@ -860,10 +860,10 @@ export interface Master extends Promise<MasterNode>, Node {
 
  */
 export interface PageInfoNode {
-  hasNextPage: Promise<Boolean>
-  hasPreviousPage: Promise<Boolean>
-  startCursor?: Promise<String | null>
-  endCursor?: Promise<String | null>
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+  startCursor?: String
+  endCursor?: String
 }
 
 /*
@@ -878,19 +878,19 @@ export interface PageInfo extends Promise<PageInfoNode> {
 }
 
 export interface MasterSubscriptionPayloadNode {
-  mutation: Promise<MutationType>
-  updatedFields?: Promise<StringNode[]>
+  mutation: MutationType
+  updatedFields?: String
 }
 
 export interface MasterSubscriptionPayload extends Promise<MasterSubscriptionPayloadNode> {
   mutation: MutationType
   node: () => Master
-  updatedFields: Promise<StringNode[]>
+  updatedFields: String
   previousValues: () => MasterPreviousValues
 }
 
 export interface AggregateCatNode {
-  count: Promise<Int>
+  count: Int
 }
 
 export interface AggregateCat extends Promise<AggregateCatNode> {
@@ -898,9 +898,9 @@ export interface AggregateCat extends Promise<AggregateCatNode> {
 }
 
 export interface CatNode extends Node {
-  id: Promise<ID_Output>
-  name: Promise<String>
-  color: Promise<String>
+  id: ID_Output
+  name: String
+  color: String
 }
 
 export interface Cat extends Promise<CatNode>, Node {
@@ -924,7 +924,7 @@ export interface MasterConnectionNode {
  */
 export interface MasterConnection extends Promise<MasterConnectionNode> {
   pageInfo: () => PageInfo
-  edges: Promise<Array<MasterEdgeNode>>
+  edges: () => Promise<Array<MasterEdge>>
   aggregate: () => AggregateMaster
 }
 
@@ -933,7 +933,7 @@ export interface MasterConnection extends Promise<MasterConnectionNode> {
 
  */
 export interface CatEdgeNode {
-  cursor: Promise<String>
+  cursor: String
 }
 
 /*
@@ -946,7 +946,7 @@ export interface CatEdge extends Promise<CatEdgeNode> {
 }
 
 export interface MasterPreviousValuesNode {
-  id: Promise<ID_Output>
+  id: ID_Output
 }
 
 export interface MasterPreviousValues extends Promise<MasterPreviousValuesNode> {
@@ -967,19 +967,19 @@ export interface CatConnectionNode {
  */
 export interface CatConnection extends Promise<CatConnectionNode> {
   pageInfo: () => PageInfo
-  edges: Promise<Array<CatEdgeNode>>
+  edges: () => Promise<Array<CatEdge>>
   aggregate: () => AggregateCat
 }
 
 export interface CatSubscriptionPayloadNode {
-  mutation: Promise<MutationType>
-  updatedFields?: Promise<StringNode[]>
+  mutation: MutationType
+  updatedFields?: String
 }
 
 export interface CatSubscriptionPayload extends Promise<CatSubscriptionPayloadNode> {
   mutation: MutationType
   node: () => Cat
-  updatedFields: Promise<StringNode[]>
+  updatedFields: String
   previousValues: () => CatPreviousValues
 }
 
@@ -988,7 +988,7 @@ export interface CatSubscriptionPayload extends Promise<CatSubscriptionPayloadNo
 
  */
 export interface MasterEdgeNode {
-  cursor: Promise<String>
+  cursor: String
 }
 
 /*
@@ -1001,7 +1001,7 @@ export interface MasterEdge extends Promise<MasterEdgeNode> {
 }
 
 export interface AggregateMasterNode {
-  count: Promise<Int>
+  count: Int
 }
 
 export interface AggregateMaster extends Promise<AggregateMasterNode> {
